@@ -1,0 +1,72 @@
+import rodados.*
+import municipalidad.*
+
+describe "Test de dependencias"{
+	//empleados
+	const dep = new DependenciasM( cantDeEmpledos = 45)
+	const cult = new DependenciasM( cantDeEmpledos = 31)
+	//rodados de ambas dependencias
+	const  cachito = new Corsa( color = "rojo" )
+	//rodados de deportes
+	const c1 = new Corsa( color = "azul")
+	const c2 = new Corsa( color = "verde")
+	const k1 = new Renault (cuentaConUnTanqueDeGas = true)
+	const a1 = new AutoEspecial ( capacidad = 5 , velocidadMax = 160, peso = 1200, color = "beige" )
+	// rodados de cultura
+	const k2 = new Renault(cuentaConUnTanqueDeGas = true)
+	const k3 = new Renault(cuentaConUnTanqueDeGas = true)
+	const k4 = new Renault(cuentaConUnTanqueDeGas = false)
+	//traffic
+	
+	method initialize(){
+		dep.agregarAFlota(cachito)
+		dep.agregarAFlota(c1)
+		dep.agregarAFlota(c2)
+		dep.agregarAFlota(k1)
+		dep.agregarAFlota(a1)
+		//
+		traffic.interiorEsPopular()
+		traffic.motorEsBataton()
+		cult.agregarAFlota(cachito)
+		cult.agregarAFlota(k2)
+		cult.agregarAFlota(k3)
+		cult.agregarAFlota(k4)
+		cult.agregarAFlota(traffic)
+	}
+	
+//   y la capacidad faltante. 
+
+test "Peso total de la flota deportes" {
+	assert.equals(6450, dep.pesoTotalFlota())
+}
+test "Peso total de la flota cultura" {
+	assert.equals(10700, cult.pesoTotalFlota())
+}
+test "Estan bien equipada la dependencia deporte"{
+	assert.equals(true ,dep.estaBienEquipadad())
+}
+test "Estan bien equipada la dependencia cultura"{
+	assert.equals(false ,cult.estaBienEquipadad())
+} 
+test "La capacidad total en color azul para deportes"{
+	assert.equals(7, dep.capacidadTotalEnColor("azul"))
+}
+test "La capacidad total en color azul para cultura"{
+	assert.equals(10, cult.capacidadTotalEnColor("azul"))
+}
+test "El color del rodado más rápido en deportes"{
+	assert.equals("beige", dep.colorDelRodadoMasRapido())
+}
+test "El color del rodado más rápido en cultura"{
+	assert.equals("rojo", cult.colorDelRodadoMasRapido())
+}
+test "Si es grande o no cultura"{
+	assert.equals(false, cult.esGrande())
+}  
+test "La capacidad faltante de deportes"{
+	assert.equals(25, dep.capacidadFaltante())
+}
+test "La capacidad faltante de cultura"{
+	assert.equals(5, cult.capacidadFaltante())
+}
+}
