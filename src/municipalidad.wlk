@@ -35,3 +35,35 @@ class DependenciasM{
 	}
 	
 }
+/*ETAPA 2 */	
+
+/*Agregar al modelo los **pedidos** de translados que se generan en la municipalidad.  
+Cada pedido especifica: la _distancia_ a recorrer (expresada en kilómetros),
+*  el _tiempo máximo_ en que se puede hacer el viaje (expresado en horas),
+*  la _cantidad de pasajeros_ a transportar, y también un conjunto de _colores incompatibles_,
+*  o sea, que los pasajeros rechazan hacer el viaje en autos de esos colores.  
+La _velocidad requerida_ de un pedido es el resultado de dividir la cantidad de kilómetros por el tiempo máximo.
+P.ej. si para un pedido de un viaje de 480 kilómetros se indica como tiempo máximo 6 horas, 
+* entonces la velocidad requerida de este pedido es de 80 kms/hora (480 / 6 = 80).    */
+class PedidoDeTraslado{
+	var property distancia
+	var property tiempoMax
+	var property cantDePax
+	const coloresIncompatibles = #{}
+	
+	method velocidadRequerida() = distancia / tiempoMax
+	
+	method puedeSatisfacerElPedido(auto) {
+		return self.condicionDeVelocidad(auto) and self.condicionDeCapacidad(auto) and self.condicionColorCompatible(auto)
+	}
+	
+	
+	//que la velocidad máxima del auto sea al menos 10 km/h mayor a la velocidad requerida del pedido;
+	method condicionDeVelocidad(auto) = auto.velocidadMax() - self.velocidadRequerida() >= 10
+	
+	//que la capacidad del auto dé para la cantidad de pasajeros del viaje;
+	method condicionDeCapacidad(auto) = auto.capacidad() >= cantDePax
+	
+	//que el auto no sea de un color incompatible para el viaje.
+	method condicionColorCompatible(auto) = !coloresIncompatibles.contains(auto.color())
+}

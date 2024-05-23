@@ -16,6 +16,13 @@ describe "Test de dependencias"{
 	const k2 = new Renault(cuentaConUnTanqueDeGas = true)
 	const k3 = new Renault(cuentaConUnTanqueDeGas = true)
 	const k4 = new Renault(cuentaConUnTanqueDeGas = false)
+	
+	//pedido
+	
+	const p1 = new PedidoDeTraslado( distancia = 960, tiempoMax = 8, cantDePax = 4, coloresIncompatibles = #{"azul", "negro"})
+	const p2 = new PedidoDeTraslado( distancia = 960, tiempoMax = 8, cantDePax = 4, coloresIncompatibles = #{"azul", "negro", "rojo"})
+	const p3 = new PedidoDeTraslado( distancia = 960, tiempoMax = 8, cantDePax = 6, coloresIncompatibles = #{"azul", "negro"})
+	const p4 = new PedidoDeTraslado( distancia = 960, tiempoMax = 6, cantDePax = 4, coloresIncompatibles = #{"azul", "negro"})
 	//traffic
 	
 	method initialize(){
@@ -68,5 +75,20 @@ test "La capacidad faltante de deportes"{
 }
 test "La capacidad faltante de cultura"{
 	assert.equals(5, cult.capacidadFaltante())
+}
+
+/*PEDIDOS */
+
+test "Cumple las condicones del pedido 1 el auto cachito"{
+	assert.equals(true, p1.puedeSatisfacerElPedido(cachito))
+}
+test "Cumple las condicones del pedido 2 el auto cachito"{
+	assert.equals(false, p2.puedeSatisfacerElPedido(cachito))
+}
+test "Cumple las condicones del p3 el auto cachito"{
+	assert.equals(false, p3.puedeSatisfacerElPedido(cachito))
+}
+test "Cumple las condicones del p4 el auto cachito"{
+	assert.equals(false, p4.puedeSatisfacerElPedido(cachito))
 }
 }
